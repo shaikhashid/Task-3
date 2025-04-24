@@ -1,0 +1,45 @@
+-- 1. Basic SELECT and WHERE
+SELECT * FROM Customers WHERE city = 'Hyderabad';
+
+-- 2. ORDER BY
+SELECT * FROM Orders ORDER BY order_date DESC;
+
+-- 3. GROUP BY with Aggregates
+SELECT customer_id, COUNT(*) AS total_orders, SUM(total_amount) AS total_spent
+FROM Orders
+GROUP BY customer_id
+ORDER BY total_spent DESC;
+
+-- 4. INNER JOIN: Orders with Customer Info
+SELECT o.order_id, o.order_date, c.name, o.total_amount
+FROM Orders o
+INNER JOIN Customers c ON o.customer_id = c.customer_id;
+
+-- 5. LEFT JOIN: All Products with Order Status
+SELECT p.name, p.category, oi.quantity
+FROM Products p
+LEFT JOIN Order_Items oi ON p.product_id = oi.product_id;
+
+-- 6. Subquery: Customers who spent more than average
+SELECT name, email
+FROM Customers
+WHERE customer_id IN (
+  SELECT customer_id
+  FROM Orders
+  GROUP BY customer_id
+  HAVING SUM(total_amount) > (
+    SELECT AVG(total_amount) FROM Orders
+  )
+);
+
+-- 7. Create View: High Value Orders
+CREATE VIEW HighValueOrders AS
+SELECT * FROM Orders WHERE total_amount > 5000;
+
+-- 8. Use of Index (if using MySQL/PostgreSQL)
+CREATE INDEX idx_customer_city ON Customers(city);
+
+-- 9. Right Join (PostgreSQL only): Products even if not ordered
+SELECT oi.order_id, p.name AS product_name
+FROM Order_Items oi
+RIGHT JOIN Products p ON oi.product_id = p.product_id;
