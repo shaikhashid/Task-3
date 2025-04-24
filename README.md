@@ -1,4 +1,4 @@
-E-commerce Dataset Analysis Summary
+E-commerce Dataset Analysis Summary:
 The Olist dataset provides a comprehensive view of customer behavior, seller performance, product popularity, and financial transactions in a Brazilian online marketplace. Using SQL and visual analytics, the following insights were derived:
 
 🔹 Top Product Categories
